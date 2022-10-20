@@ -4,7 +4,7 @@
 	"description": "",
 	"superagent": "index.js",
 	"scripts": {
-		"start": "nodemon --watch './src/*' src/index.js",
+		"start": "node src/index.js",
 		"puppet-install": "node node_modules/.bin/wechaty-puppet-install",
 		"deploy": "node src/index.js",
 		"pm2deploy": "pm2 start pm2.config.js"

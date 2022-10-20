@@ -3,6 +3,8 @@ const dayjs = require('dayjs')
 const onMessage = require('./message')
 const room = require('./room')
 const { sleep } = require('./utils')
+const { exec } = require('child_process')
+const { wechatRobotKey } = require('../saul.config')
 
 async function main () {
   const bot = WechatyBuilder.build({
@@ -33,8 +35,28 @@ async function main () {
   // 登出
   bot.on('logout', (user) => {
     console.log(`小助手${user} 已经登出`)
+    // 发送企业微信通知
+    exec(`curl '${wechatRobotKey}' \
+   -H 'Content-Type: application/json' \
+   -d '
+   {
+        "msgtype": "text",
+        "text": {
+            "content": "小助手已经登出"
+        }
+   }'
+`, (error, stdout, stderr) => {
+      if (error) {
+        console.log(`error: ${error.message}`)
+        return
+      }
+      if (stderr) {
+        console.log(`stderr: ${stderr}`)
+        return
+      }
+      console.log(`stdout: ${stdout}`)
+    })
   })
-
   // 监听对话
   bot.on('message', (message) => {
     onMessage(bot, message)

@@ -17,9 +17,9 @@ module.exports = {
     out_file: './logs/app-out.log',
     merge_logs: true,
     log_date_format: 'YYYY-MM-DD HH:mm:ss',
-    min_uptime: '60s',
-    max_restarts: 30,
-    autorestart: true,
-    restart_delay: '60'
+    // 如果 20s 内重启 10 次, 则认为有错误，不再重启
+    min_uptime: 20000,
+    max_restarts: 5,
+    autorestart: true
   }]
 }

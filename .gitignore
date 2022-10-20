@@ -17,3 +17,4 @@
 *.memory-card.json
 package-lock.json
 logs/
+saul.config.js
